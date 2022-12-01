@@ -12,15 +12,19 @@ fun getHighestGroupTotal(calorieList: ArrayList<ArrayList<Int>>): Int {
 
     logger.info { "Computing highest group total..." }
 
-    calorieList.stream().forEach { group ->
+    calorieList.forEach { group ->
         groupTotal = 0
 
-        group.stream().forEach {
+        group.forEach {
+            logger.debug("Adding [$it] to [$groupTotal]")
             groupTotal += it
         }
 
         if (groupTotal > highestTotalCalories) {
+            logger.debug("[$groupTotal] is higher than [$highestTotalCalories]. Setting new highest value.")
             highestTotalCalories = groupTotal
+        } else {
+            logger.debug("[$groupTotal] is not higher than [$highestTotalCalories]")
         }
     }
 
@@ -31,26 +35,28 @@ fun getHighestGroupTotal(calorieList: ArrayList<ArrayList<Int>>): Int {
 
 fun getCalorieList(data: BufferedReader): ArrayList<ArrayList<Int>> {
     val calorieList: ArrayList<ArrayList<Int>> = ArrayList()
-    val calorieListTemp: ArrayList<Int> = ArrayList()
+    val group: ArrayList<Int> = ArrayList()
 
     logger.info { "Parsing calorie list from file content..." }
 
     // Open the input file for reading
     data.use { reader ->
+
         reader.readLines().forEach { line ->
             if (line == "") {
                 logger.debug("Blank Line!")
-                calorieList.add(calorieListTemp)
-                calorieListTemp.clear()
+
+                calorieList.add(ArrayList(group))
+                group.clear()
             } else {
                 logger.debug("Content Line! [$line]")
-                calorieListTemp.add(line.toInt())
+                group.add(line.toInt())
             }
         }
     }
 
     // Add the final group
-    calorieList.add(calorieListTemp)
+    calorieList.add(group)
 
     logger.info { "Calorie list parsed." }
 
