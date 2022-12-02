@@ -1,7 +1,7 @@
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader, stderr};
 use std::process;
-use std::collections::HashMap;
 
 use log::{debug, error, info, warn};
 
@@ -31,7 +31,6 @@ fn get_round_points(opponent: &str, player: &str) -> (u32, u32) {
             debug!("Player played Scissors");
             player_win = 0
         }
-
     } else if (opponent == "B") {
         debug!("Opponent played Paper");
         if (player == "X") {
@@ -44,7 +43,6 @@ fn get_round_points(opponent: &str, player: &str) -> (u32, u32) {
             debug!("Player played Scissors");
             player_win = 6
         }
-
     } else {
         debug!("Opponent played Scissors");
         if (player == "X") {
@@ -66,7 +64,6 @@ fn get_round_points(opponent: &str, player: &str) -> (u32, u32) {
 
 
 fn get_total_score(reader: BufReader<File>) {
-
     for (index, line) in reader.lines().enumerate() {
         let line = line.unwrap();
         debug!("{}", line);
