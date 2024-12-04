@@ -1,0 +1,5 @@
+[workspace]
+
+members = [
+    "src/rust/day2/rock-paper-scissors",
+]
